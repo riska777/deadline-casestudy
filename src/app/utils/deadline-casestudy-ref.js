@@ -78,10 +78,6 @@ function checkAddLastDayAsHours(businessLengthForTask) {
     return businessLengthForTask >= 2 && businessLengthForTask % 1 == 0;
 }
 
-function calcHoursLeft(startDate, workdayLength) {
-    return workdayLength - (startDate.getHours() - 9);
-}
-
 calculateDeadline("2023-09-01 07:00:00", 8);
 calculateDeadline("2023-09-01 09:00:00", 8);
 calculateDeadline("2023-09-01 12:00:00", 2);
