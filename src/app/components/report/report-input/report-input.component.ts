@@ -7,6 +7,7 @@ import { Problem } from 'src/app/models/problem.interface';
 import { DeadlineService } from 'src/app/services/deadline.service';
 import { Subscription } from 'rxjs';
 import { LocalstorageService } from 'src/app/services/localstorage.service';
+import { Deadline } from 'src/app/models/deadline.interface';
 
 @Component({
   selector: 'app-report-input',
@@ -42,7 +43,7 @@ export class ReportInputComponent implements OnDestroy {
       this.deadlineService.getDeadline(problem).subscribe(
         (deadline) => {
           if (deadline) {
-            this.lsService.addToList(STORAGE_KEY_PROBLEM, deadline);
+            this.lsService.addToList<Deadline>(STORAGE_KEY_PROBLEM, deadline);
           }
         }
       ),

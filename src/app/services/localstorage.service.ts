@@ -25,9 +25,9 @@ export class LocalstorageService {
   }
 
   public addToList<T>(key: string, item: T): void {
-    const list = this.getListValue(key);
+    const list = this.getListValue<T>(key);
     list.push(item);
-    this.setListValue(key, list);
+    this.setListValue<T>(key, list);
     window.dispatchEvent(new Event('dataUpdated'));
   }
 
