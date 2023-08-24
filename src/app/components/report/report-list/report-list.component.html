@@ -1,14 +1,16 @@
-<mat-list role="list" *ngIf="deadlineList">
-    <mat-list-item role="listitem" *ngFor="let deadline of deadlineList">
-        <span matListItemTitle>Problem Report</span>
-        <span matListItemIcon>🔥</span>
-        <span matListItemLine>Reported: {{ deadline.taskStartDate }}</span>
-        <span matListItemLine>Deadline: {{ deadline.taskEndDate }}</span>
-        <span matListItemLine [ngPlural]="deadline.turnaroundTime">Turnaround time: 
-            <ng-template ngPluralCase="=0">0 hour</ng-template>
-            <ng-template ngPluralCase="=1">1 hour</ng-template>
-            <ng-template ngPluralCase="other">{{ deadline.turnaroundTime }} hours</ng-template>
-        </span>
-        <span matListItemLine>Business Length: {{ deadline.businessLengthForTask | json }}</span>
-    </mat-list-item>
-</mat-list>
+<div class="c-report-list">
+    <mat-list role="list" *ngIf="deadlineList">
+        <mat-list-item role="listitem" *ngFor="let deadline of deadlineList">
+            <span matListItemTitle>Problem Report</span>
+            <span matListItemIcon>🔥</span>
+            <span matListItemLine>Reported: {{ deadline.taskStartDate }}</span>
+            <span matListItemLine>Deadline: {{ deadline.taskEndDate }}</span>
+            <span matListItemLine [ngPlural]="deadline.turnaroundTime">Turnaround time: 
+                <ng-template ngPluralCase="=0">0 hour</ng-template>
+                <ng-template ngPluralCase="=1">1 hour</ng-template>
+                <ng-template ngPluralCase="other">{{ deadline.turnaroundTime }} hours</ng-template>
+            </span>
+            <span matListItemLine>Business Length: {{ deadline.businessLengthForTask | json }}</span>
+        </mat-list-item>
+    </mat-list>
+</div>
