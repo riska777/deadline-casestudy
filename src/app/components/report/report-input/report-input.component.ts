@@ -41,11 +41,8 @@ export class ReportInputComponent implements OnDestroy {
     this.subscriptions.add(
       this.deadlineService.getDeadline(problem).subscribe(
         (deadline) => {
-          console.log("deadline", deadline);
-
           if (deadline) {
             this.lsService.addToList(STORAGE_KEY_PROBLEM, deadline);
-            console.log("list", this.lsService.getListValue(STORAGE_KEY_PROBLEM));
           }
         }
       ),
