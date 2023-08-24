@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BusinessLength, Deadline } from '../models/deadline.interface';
 import { WORKDAYS, WORKDAY_END, WORKDAY_LENGTH, WORKDAY_START } from '../config/config';
+import { Observable, of } from 'rxjs';
+import { Problem } from '../models/problem.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,13 @@ export class DeadlineService {
   private workdayEnd = WORKDAY_END;
   private workdays = WORKDAYS;
 
-  private calculateDeadline(submitDate: any, turnaroundTime: any): Deadline | null {
+  public getDeadline(problem: Problem): Observable<Deadline | null> {
+    return of(this.calculateDeadline(problem));
+  }
+
+  private calculateDeadline(problem: Problem): Deadline | null {
+    const turnaroundTime = problem.turnaroundTime;
+    const submitDate = problem.submitDate;
     const businessLengthForTask = this.calcBusinessLengthForTask(turnaroundTime, this.workdayLength);
     const taskStartDate = new Date(submitDate);
     const taskEndDate = new Date(submitDate);

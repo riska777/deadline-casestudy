@@ -19,7 +19,10 @@
                 <div class="col">
                     <mat-form-field class="full-width">
                         <input matInput formControlName="startHour" placeholder="Start Hour" type="number">
-                        <mat-error *ngIf="problemReportForm.get('startHour')?.hasError('min') || problemReportForm.get('startHour')?.hasError('max')">
+                        <mat-error 
+                            *ngIf="problemReportForm.get('startHour')?.hasError('min')
+                                || problemReportForm.get('startHour')?.hasError('max')
+                                || problemReportForm.get('startHour')?.hasError('notInteger')">
                             Please enter a valid working hour between 9 and 17.
                         </mat-error>
                     </mat-form-field>
@@ -28,7 +31,10 @@
                 <div class="col">
                     <mat-form-field class="full-width">
                         <input matInput formControlName="turnaroundTime" placeholder="Turnaround Time" type="number">
-                        <mat-error *ngIf="problemReportForm.get('turnaroundTime')?.hasError('required') || problemReportForm.get('turnaroundTime')?.hasError('min')">
+                        <mat-error 
+                            *ngIf="problemReportForm.get('turnaroundTime')?.hasError('required')
+                                || problemReportForm.get('turnaroundTime')?.hasError('min')
+                                || problemReportForm.get('turnaroundTime')?.hasError('notInteger')">
                             Please enter a valid number.
                         </mat-error>
                     </mat-form-field>
@@ -37,6 +43,6 @@
         </form>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button>Submit</button>
+        <button mat-raised-button color="primary" type="submit" (click)="submitForm()">Submit</button>
     </mat-card-actions>
 </mat-card>

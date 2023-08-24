@@ -1,3 +1,5 @@
+$sm: 920px;
+
 .full-width {
   width: 100%;
 }
@@ -12,13 +14,17 @@
 }
 
 .row {
-  display: flex;
-  flex-direction: row;
+  @media screen and (min-width: $sm) {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .col {
-  flex: 1;
-  margin-right: 20px;
+  @media screen and (min-width: $sm) {
+    flex: 1;
+    margin-right: 20px;
+  }
 }
 
 .col:last-child {
