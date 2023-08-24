@@ -10,16 +10,18 @@ function calculateDeadline(submitDate, turnaroundTime) {
     const taskStartDate = new Date(submitDate);
     const taskEndDate = new Date(submitDate);
 
+    /* Problems can only be reported during working hours. */
     if (
         !workdays.includes(taskStartDate.getDay()) 
         || taskStartDate.getHours() < workdayStart 
         || taskStartDate.getHours() > workdayEnd
     ) {
-        console.error("You can only report a problem in working hours.");
+        console.error("You can only report a problem during working hours.");
         console.log("\n");
         return;
     }
 
+    /* Calculate deadline */
     const calcTaskEndDate = () => {
         const singleDayTask = isSingleDayTask(turnaroundTime, workdayLength, taskStartDate);
 
@@ -33,7 +35,7 @@ function calculateDeadline(submitDate, turnaroundTime) {
                     const days = taskEndDate.getDate() + 1;
                     taskEndDate.setDate(days);
                     /* Skip weekend days */
-                    while(!workdays.includes(taskEndDate.getDay())) {
+                    while (!workdays.includes(taskEndDate.getDay())) {
                         taskEndDate.setDate(taskEndDate.getDate() + 1);
                     }
                 }
