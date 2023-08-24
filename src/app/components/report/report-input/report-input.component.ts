@@ -42,8 +42,11 @@ export class ReportInputComponent implements OnDestroy {
       this.deadlineService.getDeadline(problem).subscribe(
         (deadline) => {
           console.log("deadline", deadline);
-          this.lsService.addToList(STORAGE_KEY_PROBLEM, deadline);
-          console.log("list", this.lsService.getListValue(STORAGE_KEY_PROBLEM));
+
+          if (deadline) {
+            this.lsService.addToList(STORAGE_KEY_PROBLEM, deadline);
+            console.log("list", this.lsService.getListValue(STORAGE_KEY_PROBLEM));
+          }
         }
       ),
     );
@@ -62,6 +65,11 @@ export class ReportInputComponent implements OnDestroy {
     } else {
       console.log('Form is invalid. Please check the inputs.');
     }
+  }
+
+  public clearList(): void {
+    this.lsService.clear();
+    window.dispatchEvent(new Event('dataUpdated'));
   }
 
   private intValidator(): ValidatorFn {

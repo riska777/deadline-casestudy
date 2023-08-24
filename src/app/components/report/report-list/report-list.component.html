@@ -1,5 +1,5 @@
 <mat-list role="list" *ngIf="deadlineList">
     <mat-list-item role="listitem" *ngFor="let deadline of deadlineList">
-        <p>🔥{{ deadline.taskStartDate }} -- {{ deadline.businessLengthForTask | json }} -- {{ deadline.taskEndDate }}</p>
+        <p>🔥Reported: {{ deadline.taskStartDate }} -- {{ deadline.businessLengthForTask | json }} -- Deadline: {{ deadline.taskEndDate }}</p>
     </mat-list-item>
 </mat-list>
