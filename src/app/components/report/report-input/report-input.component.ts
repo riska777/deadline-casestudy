@@ -1,12 +1,12 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { DATE_FORMAT_SHORT } from 'src/app/config/config';
-import { Deadline } from 'src/app/models/deadline.interface';
+import { DATE_FORMAT_SHORT, STORAGE_KEY_PROBLEM, WORKDAY_LENGTH, WORKDAY_START } from 'src/app/config/config';
 import { Problem } from 'src/app/models/problem.interface';
 import { DeadlineService } from 'src/app/services/deadline.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { LocalstorageService } from 'src/app/services/localstorage.service';
 
 @Component({
   selector: 'app-report-input',
@@ -20,8 +20,8 @@ import { Observable, Subscription } from 'rxjs';
 export class ReportInputComponent implements OnDestroy {
   public problemReportForm: FormGroup = this.fb.group({
     reportDateTime: [null, Validators.required],
-    startHour: [9, [Validators.required, Validators.min(9), Validators.max(17), this.intValidator()]],
-    turnaroundTime: [10, [Validators.required, Validators.min(1), this.intValidator()]],
+    startHour: [WORKDAY_START, [Validators.required, Validators.min(9), Validators.max(17), this.intValidator()]],
+    turnaroundTime: [WORKDAY_LENGTH, [Validators.required, Validators.min(1), this.intValidator()]],
   });
 
   private subscriptions = new Subscription();
@@ -30,6 +30,7 @@ export class ReportInputComponent implements OnDestroy {
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private deadlineService: DeadlineService,
+    private lsService: LocalstorageService
   ) { }
 
   ngOnDestroy(): void {
@@ -41,6 +42,8 @@ export class ReportInputComponent implements OnDestroy {
       this.deadlineService.getDeadline(problem).subscribe(
         (deadline) => {
           console.log("deadline", deadline);
+          this.lsService.addToList(STORAGE_KEY_PROBLEM, deadline);
+          console.log("list", this.lsService.getListValue(STORAGE_KEY_PROBLEM));
         }
       ),
     );

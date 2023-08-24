@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { ReportListComponent } from './components/report/report-list/report-list.component';
 import { ReportInputComponent } from './components/report/report-input/report-input.component';
 import { ReportContainerComponent } from './components/report/report-container/report-container.component';
+import { DeadlineService } from './services/deadline.service';
+import { LocalstorageService } from './services/localstorage.service';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -16,7 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DeadlineService } from './services/deadline.service';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -38,9 +40,11 @@ import { DeadlineService } from './services/deadline.service';
     MatFormFieldModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatListModule,
   ],
   providers: [
-    DeadlineService
+    DeadlineService,
+    LocalstorageService
   ],
   bootstrap: [AppComponent]
 })

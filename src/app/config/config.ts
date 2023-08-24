@@ -5,3 +5,5 @@ export const WORKDAYS = [1,2,3,4,5];
 
 export const DATE_FORMAT_SHORT = "YYYY-MM-dd";
 export const DATE_FORMAT_LONG = "YYYY-MM-dd HH:mm:ss";
+
+export const STORAGE_KEY_PROBLEM = "PROBLEM";
