@@ -1,9 +1,12 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { DATE_FORMAT_SHORT } from 'src/app/config/config';
+import { Deadline } from 'src/app/models/deadline.interface';
+import { Problem } from 'src/app/models/problem.interface';
 import { DeadlineService } from 'src/app/services/deadline.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-report-input',
@@ -14,12 +17,14 @@ import { DeadlineService } from 'src/app/services/deadline.service';
     { provide: MAT_DATE_FORMATS, useValue: { parse: {}, display: { dateTimeInput: DATE_FORMAT_SHORT } } }
   ]
 })
-export class ReportInputComponent implements OnInit {
+export class ReportInputComponent implements OnDestroy {
   public problemReportForm: FormGroup = this.fb.group({
     reportDateTime: [null, Validators.required],
     startHour: [9, [Validators.required, Validators.min(9), Validators.max(17), this.intValidator()]],
     turnaroundTime: [10, [Validators.required, Validators.min(1), this.intValidator()]],
-  });;
+  });
+
+  private subscriptions = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -27,14 +32,30 @@ export class ReportInputComponent implements OnInit {
     private deadlineService: DeadlineService,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  public getDeadline(problem: Problem): void {
+    this.subscriptions.add(
+      this.deadlineService.getDeadline(problem).subscribe(
+        (deadline) => {
+          console.log("deadline", deadline);
+        }
+      ),
+    );
+  }
 
   public submitForm(): void {
     if (this.problemReportForm.valid) {
       const formData = this.problemReportForm.value;
-      console.log('Form data submitted:', formData);
-      const formattedDate = this.datePipe.transform(this.problemReportForm.value.reportDateTime, DATE_FORMAT_SHORT);
-      console.log('Formatted Date:', formattedDate);
+      const date = this.datePipe.transform(formData.reportDateTime, DATE_FORMAT_SHORT);
+      const formattedDate = `${date} ${formData.startHour}:00:00`;
+
+      this.getDeadline({
+        submitDate: formattedDate,
+        turnaroundTime: formData.turnaroundTime
+      });
     } else {
       console.log('Form is invalid. Please check the inputs.');
     }

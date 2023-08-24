@@ -66,12 +66,12 @@ export class DeadlineService {
     }
     calcTaskEndDate();
 
-    console.log("deadline", turnaroundTime, businessLengthForTask, taskStartDate.toUTCString(), taskEndDate.toUTCString());
+    // console.log("deadline", turnaroundTime, businessLengthForTask, taskStartDate.toLocaleString(), taskEndDate.toLocaleString());
     return {
       turnaroundTime,
       businessLengthForTask,
-      taskStartDate: taskStartDate.toUTCString(),
-      taskEndDate: taskEndDate.toUTCString()
+      taskStartDate: taskStartDate.toLocaleString(),
+      taskEndDate: taskEndDate.toLocaleString()
     }
   }
 
