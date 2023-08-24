@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { DATE_FORMAT_SHORT, STORAGE_KEY_PROBLEM, WORKDAY_LENGTH, WORKDAY_START } from 'src/app/config/config';
+import { DATE_FORMAT_SHORT, STORAGE_KEY_PROBLEM, WORKDAY_END, WORKDAY_LENGTH, WORKDAY_START } from 'src/app/config/config';
 import { Problem } from 'src/app/models/problem.interface';
 import { DeadlineService } from 'src/app/services/deadline.service';
 import { Subscription } from 'rxjs';
@@ -20,7 +20,7 @@ import { LocalstorageService } from 'src/app/services/localstorage.service';
 export class ReportInputComponent implements OnDestroy {
   public problemReportForm: FormGroup = this.fb.group({
     reportDateTime: [null, Validators.required],
-    startHour: [WORKDAY_START, [Validators.required, Validators.min(9), Validators.max(17), this.intValidator()]],
+    startHour: [WORKDAY_START, [Validators.required, Validators.min(WORKDAY_START), Validators.max(WORKDAY_END), this.intValidator()]],
     turnaroundTime: [WORKDAY_LENGTH, [Validators.required, Validators.min(1), this.intValidator()]],
   });
 
