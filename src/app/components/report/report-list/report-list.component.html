@@ -1,5 +1,5 @@
-<div class="c-report-list">
-    <mat-list role="list" *ngIf="deadlineList">
+<div class="c-report-list" *ngIf="deadlineList && deadlineList.length">
+    <mat-list role="list">
         <mat-list-item role="listitem" *ngFor="let deadline of deadlineList">
             <span matListItemTitle>Problem Report</span>
             <span matListItemIcon>🔥</span>
