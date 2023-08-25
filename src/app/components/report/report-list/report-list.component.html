@@ -1,6 +1,7 @@
 <div class="c-report-list" *ngIf="deadlineList && deadlineList.length">
     <mat-list role="list">
         <mat-list-item role="listitem" *ngFor="let deadline of deadlineList">
+            {{ deadline | json }}
             <span matListItemTitle>Problem Report</span>
             <span matListItemIcon>🔥</span>
             <span matListItemLine>Reported: {{ deadline.taskStartDate }}</span>

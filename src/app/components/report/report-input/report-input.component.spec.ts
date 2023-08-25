@@ -8,6 +8,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 
 import { ReportInputComponent } from './report-input.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
 
 describe('ReportInputComponent', () => {
   let component: ReportInputComponent;
@@ -24,6 +27,10 @@ describe('ReportInputComponent', () => {
         MatInputModule,
         MatRadioModule,
         MatSelectModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatNativeDateModule,
+        MatDatepickerModule,
       ]
     }).compileComponents();
   }));

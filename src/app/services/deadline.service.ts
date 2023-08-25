@@ -67,12 +67,13 @@ export class DeadlineService {
     calcTaskEndDate();
 
     // console.log("deadline", turnaroundTime, businessLengthForTask, taskStartDate.toLocaleString(), taskEndDate.toLocaleString());
-    return {
+    const deadline: Deadline = {
       turnaroundTime,
       businessLengthForTask,
       taskStartDate: taskStartDate.toLocaleString(),
       taskEndDate: taskEndDate.toLocaleString()
     }
+    return deadline;
   }
 
   private isSingleDayTask(turnaroundTime: number, workdayLength: number, taskStartDate: Date): boolean {
