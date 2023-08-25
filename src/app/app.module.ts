@@ -20,7 +20,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +45,7 @@ import { CommonModule } from '@angular/common';
   ],
   providers: [
     DeadlineService,
-    LocalstorageService
+    LocalstorageService,
   ],
   bootstrap: [AppComponent]
 })

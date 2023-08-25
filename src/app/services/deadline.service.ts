@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BusinessLength, Deadline } from '../models/deadline.interface';
-import { WORKDAYS, WORKDAY_END, WORKDAY_LENGTH, WORKDAY_START } from '../config/config';
+import { DATETIME_OPTIONS, WORKDAYS, WORKDAY_END, WORKDAY_LENGTH, WORKDAY_START } from '../config/config';
 import { Observable, of } from 'rxjs';
 import { Problem } from '../models/problem.interface';
 
@@ -66,12 +66,11 @@ export class DeadlineService {
     }
     calcTaskEndDate();
 
-    // console.log("deadline", turnaroundTime, businessLengthForTask, taskStartDate.toLocaleString(), taskEndDate.toLocaleString());
     const deadline: Deadline = {
       turnaroundTime,
       businessLengthForTask,
-      taskStartDate: taskStartDate.toLocaleString(),
-      taskEndDate: taskEndDate.toLocaleString()
+      taskStartDate: new Intl.DateTimeFormat('en-US', DATETIME_OPTIONS as any).format(taskStartDate),
+      taskEndDate: new Intl.DateTimeFormat('en-US', DATETIME_OPTIONS as any).format(taskEndDate)
     }
     return deadline;
   }

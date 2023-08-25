@@ -13,10 +13,7 @@ import { Deadline } from 'src/app/models/deadline.interface';
   selector: 'app-report-input',
   templateUrl: './report-input.component.html',
   styleUrls: ['./report-input.component.scss'],
-  providers: [
-    DatePipe,
-    { provide: MAT_DATE_FORMATS, useValue: { parse: {}, display: { dateTimeInput: DATE_FORMAT_SHORT } } }
-  ]
+  providers: [DatePipe]
 })
 export class ReportInputComponent implements OnDestroy {
   public problemReportForm: FormGroup = this.fb.group({
