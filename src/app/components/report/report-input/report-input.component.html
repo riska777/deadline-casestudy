@@ -22,7 +22,8 @@
                         <mat-label>Start Hour</mat-label>
                         <input matInput formControlName="startHour" placeholder="Start Hour" type="number">
                         <mat-error 
-                            *ngIf="problemReportForm.get('startHour')?.hasError('min')
+                            *ngIf="problemReportForm.get('startHour')?.hasError('required')
+                                || problemReportForm.get('startHour')?.hasError('min')
                                 || problemReportForm.get('startHour')?.hasError('max')
                                 || problemReportForm.get('startHour')?.hasError('notInteger')">
                             Please enter a valid working hour between 9 and 17.
