@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, fromEvent, map, startWith } from 'rxjs';
+import { catchError, fromEvent, map, Observable, of, startWith } from 'rxjs';
 import { STORAGE_KEY_PROBLEM } from 'src/app/config/config';
 import { Deadline } from 'src/app/models/deadline.interface';
 import { LocalstorageService } from 'src/app/services/localstorage.service';
@@ -10,15 +10,16 @@ import { LocalstorageService } from 'src/app/services/localstorage.service';
   styleUrls: ['./report-list.component.scss']
 })
 export class ReportListComponent {
-
+  public deadlineList$: Observable<Deadline[]> = of([]);
   private dataUpdated$ = fromEvent(window, 'dataUpdated');
-
+  
   constructor (
     private lsService: LocalstorageService
-  ) { }
+  ) { 
+    this.deadlineList$ = this.dataUpdated$.pipe(
+      startWith(true),
+      map(dataUpdated => this.lsService.getListValue<Deadline>(STORAGE_KEY_PROBLEM))
+    );
+  }
 
-  public deadlineList$: Observable<Deadline[]> = this.dataUpdated$.pipe(
-    startWith(true),
-    map(dataUpdated => this.lsService.getListValue<Deadline>(STORAGE_KEY_PROBLEM))
-  );
 }

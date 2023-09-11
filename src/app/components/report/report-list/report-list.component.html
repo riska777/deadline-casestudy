@@ -1,7 +1,7 @@
-<ng-container *ngIf="deadlineList$ | async as deadlineList">
-    <div class="c-report-list" *ngIf="deadlineList.length">
+<div class="c-report-list">
+    <ng-container *ngIf="(deadlineList$ | async)?.length; else emptyReportList">
         <mat-list role="list">
-            <mat-list-item role="listitem" *ngFor="let deadline of deadlineList">
+            <mat-list-item role="listitem" *ngFor="let deadline of deadlineList$ | async">
                 {{ deadline | json }}
                 <span matListItemTitle>Problem Report</span>
                 <span matListItemIcon>🔥</span>
@@ -14,5 +14,8 @@
                 </span>
             </mat-list-item>
         </mat-list>
-    </div>
-</ng-container>
+    </ng-container>
+    <ng-template #emptyReportList>
+        <p>No reports found.</p>
+    </ng-template>
+</div>
