@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, combineLatest, fromEvent, map, startWith, tap } from 'rxjs';
+import { Component } from '@angular/core';
+import { Observable, fromEvent, map, startWith } from 'rxjs';
 import { STORAGE_KEY_PROBLEM } from 'src/app/config/config';
 import { Deadline } from 'src/app/models/deadline.interface';
 import { LocalstorageService } from 'src/app/services/localstorage.service';
@@ -19,8 +19,6 @@ export class ReportListComponent {
 
   public deadlineList$: Observable<Deadline[]> = this.dataUpdated$.pipe(
     startWith(true),
-    map(dataUpdated => {
-      return this.lsService.getListValue<Deadline>(STORAGE_KEY_PROBLEM)
-    })
+    map(dataUpdated => this.lsService.getListValue<Deadline>(STORAGE_KEY_PROBLEM))
   );
 }
