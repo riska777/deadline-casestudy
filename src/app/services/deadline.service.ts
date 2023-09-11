@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BusinessLength, Deadline } from '../models/deadline.interface';
+import { Deadline } from '../models/deadline.interface';
 import { DATETIME_OPTIONS, WORKDAYS, WORKDAY_END, WORKDAY_LENGTH, WORKDAY_START } from '../config/config';
 import { Observable, of } from 'rxjs';
 import { Problem } from '../models/problem.interface';
@@ -21,9 +21,9 @@ export class DeadlineService {
   }
 
   private calculateDeadline(problem: Problem): Deadline | null {
+    let workingHoursToAdd = problem.turnaroundTime;
     const turnaroundTime = problem.turnaroundTime;
     const submitDate = problem.submitDate;
-    const businessLengthForTask = this.calcBusinessLengthForTask(turnaroundTime, this.workdayLength);
     const taskStartDate = new Date(submitDate);
     const taskEndDate = new Date(submitDate);
 
@@ -38,60 +38,27 @@ export class DeadlineService {
     }
 
     /* Calculate deadline */
-    const calcTaskEndDate = () => {
-      const singleDayTask = this.isSingleDayTask(turnaroundTime, this.workdayLength, taskStartDate);
+    while (workingHoursToAdd > 0) {
+      if (
+        this.workdays.includes(taskEndDate.getDay())
+        && (taskEndDate.getHours() >= this.workdayStart && taskEndDate.getHours() < this.workdayEnd)
+      ) {
+        workingHoursToAdd--;
+      }
 
-      if (businessLengthForTask.days < 1) {
-        taskEndDate.setHours(taskStartDate.getHours() + businessLengthForTask.hours);
-      } else {
-        if (!singleDayTask) {
-          const businessDaysArray = new Array(Math.floor(businessLengthForTask.days)).fill(0);
-          /* Add working days to deadline date */
-          for (let day in businessDaysArray) {
-            const days = taskEndDate.getDate() + 1;
-            taskEndDate.setDate(days);
-            /* Skip weekend days */
-            while (!this.workdays.includes(taskEndDate.getDay())) {
-              taskEndDate.setDate(taskEndDate.getDate() + 1);
-            }
-          }
-        }
-        /* Add only max possible amount of hours per day */
-        const hours = taskEndDate.getHours() + (
-          singleDayTask ? turnaroundTime : businessLengthForTask.hours
-        );
-
-        taskEndDate.setHours(hours);
+      taskEndDate.setHours(taskEndDate.getHours() + 1);
+      if (taskEndDate.getHours() === this.workdayEnd && workingHoursToAdd > 0) {
+        taskEndDate.setDate(taskEndDate.getDate() + 1);
+        taskEndDate.setHours(this.workdayStart, 0, 0, 0);
       }
     }
-    calcTaskEndDate();
 
     const deadline: Deadline = {
       turnaroundTime,
-      businessLengthForTask,
       taskStartDate: new Intl.DateTimeFormat('en-US', DATETIME_OPTIONS as any).format(taskStartDate),
-      taskEndDate: new Intl.DateTimeFormat('en-US', DATETIME_OPTIONS as any).format(taskEndDate)
+      taskEndDate: new Intl.DateTimeFormat('en-US', DATETIME_OPTIONS as any).format(taskEndDate),
+      taskEndDateUnformatted: taskEndDate
     }
     return deadline;
-  }
-
-  private isSingleDayTask(turnaroundTime: number, workdayLength: number, taskStartDate: Date): boolean {
-    return (taskStartDate.getHours() + turnaroundTime <= this.workdayStart + workdayLength);
-  }
-
-  private calcBusinessLengthForTask(turnaroundTime: number, workdayLength: number): BusinessLength {
-    let businessLengthForTask = turnaroundTime / workdayLength;
-    const addLastDaysAsHours = this.checkAddLastDayAsHours(businessLengthForTask);
-    return {
-      days: addLastDaysAsHours ? 
-        businessLengthForTask - 1 : Math.floor(businessLengthForTask),
-      hours: addLastDaysAsHours ? 
-        workdayLength : 
-        workdayLength * (businessLengthForTask - Math.floor(businessLengthForTask)),
-    };
-  }
-
-  private checkAddLastDayAsHours(businessLengthForTask: number): boolean {
-    return businessLengthForTask >= 2 && businessLengthForTask % 1 == 0;
   }
 }
