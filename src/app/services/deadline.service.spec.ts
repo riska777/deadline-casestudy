@@ -24,7 +24,7 @@ describe('DeadlineService', () => {
       "turnaroundTime": 8,
       "taskStartDate": "8/25/2023, 09:00:00",
       "taskEndDate": "8/25/2023, 17:00:00",
-      taskEndDateUnformatted: new Date("8/25/2023, 17:00:00")
+      taskEndDateUnformatted: new Date("8/25/2023, 17:00:00").getTime()
     };
     const result$ = service.getDeadline(mockProblem);
     result$.subscribe(result => {
@@ -38,7 +38,7 @@ describe('DeadlineService', () => {
       "turnaroundTime": 72,
       "taskStartDate": "8/11/2023, 09:00:00",
       "taskEndDate": "8/23/2023, 17:00:00",
-      taskEndDateUnformatted: new Date("8/23/2023, 17:00:00")
+      taskEndDateUnformatted: new Date("8/23/2023, 17:00:00").getTime()
     };
     const result$ = service.getDeadline(mockProblem);
     result$.subscribe(result => {
@@ -52,7 +52,7 @@ describe('DeadlineService', () => {
       "turnaroundTime": 16,
       "taskStartDate": "8/15/2023, 09:00:00",
       "taskEndDate": "8/16/2023, 17:00:00",
-      taskEndDateUnformatted: new Date("8/16/2023, 17:00:00")
+      taskEndDateUnformatted: new Date("8/16/2023, 17:00:00").getTime()
     };
     const result$ = service.getDeadline(mockProblem);
     result$.subscribe(result => {
@@ -66,7 +66,7 @@ describe('DeadlineService', () => {
       "turnaroundTime": 8,
       "taskStartDate": "8/15/2023, 12:00:00",
       "taskEndDate": "8/16/2023, 12:00:00",
-      taskEndDateUnformatted: new Date("8/16/2023, 12:00:00")
+      taskEndDateUnformatted: new Date("8/16/2023, 12:00:00").getTime()
     };
     const result$ = service.getDeadline(mockProblem);
     result$.subscribe(result => {
@@ -80,7 +80,7 @@ describe('DeadlineService', () => {
       "turnaroundTime": 24,
       "taskStartDate": "8/31/2023, 09:00:00",
       "taskEndDate": "9/4/2023, 17:00:00",
-      taskEndDateUnformatted: new Date("9/4/2023, 17:00:00")
+      taskEndDateUnformatted: new Date("9/4/2023, 17:00:00").getTime()
     };
     const result$ = service.getDeadline(mockProblem);
     result$.subscribe(result => {
@@ -94,7 +94,7 @@ describe('DeadlineService', () => {
       "turnaroundTime": 10,
       "taskStartDate": "8/21/2023, 09:00:00",
       "taskEndDate": "8/22/2023, 11:00:00",
-      taskEndDateUnformatted: new Date("8/22/2023, 11:00:00")
+      taskEndDateUnformatted: new Date("8/22/2023, 11:00:00").getTime()
     };
     const result$ = service.getDeadline(mockProblem);
     result$.subscribe(result => {

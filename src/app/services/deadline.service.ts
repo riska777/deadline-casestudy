@@ -57,7 +57,7 @@ export class DeadlineService {
       turnaroundTime,
       taskStartDate: new Intl.DateTimeFormat('en-US', DATETIME_OPTIONS as any).format(taskStartDate),
       taskEndDate: new Intl.DateTimeFormat('en-US', DATETIME_OPTIONS as any).format(taskEndDate),
-      taskEndDateUnformatted: taskEndDate
+      taskEndDateUnformatted: taskEndDate.getTime()
     }
     return deadline;
   }
